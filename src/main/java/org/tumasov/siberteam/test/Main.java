@@ -7,7 +7,7 @@ import org.tumasov.siberteam.test.workers.FileWriter;
 import java.util.List;
 
 public class Main {
-    private static final Logger log = Logger.getLogger(Main.class);
+    private static final Logger LOG = Logger.getLogger(Main.class);
     public static void main(String[] args) {
         if (args.length == 0 || args.length > 2) {
             System.err.println("Usage: test.jar FileWithURLs OutputFileName");
@@ -24,7 +24,7 @@ public class Main {
 
             System.out.println(sortedListOfWords);
         } catch (Exception e) {
-            log.error(e);
+            LOG.error(e);
         }
     }
 }

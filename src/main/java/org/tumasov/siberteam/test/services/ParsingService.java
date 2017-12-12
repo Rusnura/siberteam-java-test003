@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class ParsingService {
-    private static final Logger log = Logger.getLogger(ParsingService.class);
+    private static final Logger LOG = Logger.getLogger(ParsingService.class);
     private final String fileWithUrlsPath;
     private final List<URL> urlList = new ArrayList<>();
     private final ConcurrentMap<String, Object> wordsHashMap = new ConcurrentHashMap<>(); // for performance! I can replace it on CopyOnWriteArrayList???
@@ -36,7 +36,7 @@ public class ParsingService {
                     URL url = new URL(line);
                     this.urlList.add(url);
                 } catch (MalformedURLException e) {
-                    log.warn(e);
+                    LOG.warn(e);
                 }
             }
         }

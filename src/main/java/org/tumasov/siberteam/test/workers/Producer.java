@@ -11,7 +11,7 @@ import java.net.URLConnection;
 import java.util.concurrent.BlockingQueue;
 
 public class Producer implements Runnable, IDone {
-    private static final Logger log = Logger.getLogger(Producer.class);
+    private static final Logger LOG = Logger.getLogger(Producer.class);
     private final BlockingQueue<String> queueOfLines;
     private boolean isDone = false;
     private final URL url;
@@ -33,13 +33,13 @@ public class Producer implements Runnable, IDone {
                 queueOfLines.put(line);
             }
         } catch (Exception e) {
-            log.error(e);
+            LOG.error(e);
         } finally {
             isDone = true;
             try {
                 bufferedReader.close();
             } catch (IOException e) {
-                log.error(e);
+                LOG.error(e);
             }
         }
     }

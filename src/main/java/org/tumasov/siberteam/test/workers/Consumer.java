@@ -11,11 +11,11 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 public class Consumer implements Runnable {
-    private static final Logger log = Logger.getLogger(Consumer.class);
+    private static final Logger LOG = Logger.getLogger(Consumer.class);
+    private static final Boolean PRESENT = Boolean.TRUE;
     private final BlockingQueue<String> queueOfLines;
     private final ConcurrentMap<String, Object> wordsHashMap;
     private final IDone indicator;
-    private final Object emptyObjectForMap = new Object();
     private final ArrayList<String> lines = new ArrayList<>();
 
     public Consumer(BlockingQueue<String> queueOfLines, ConcurrentMap<String, Object> wordsHashMap, IDone indicator) {
@@ -26,8 +26,14 @@ public class Consumer implements Runnable {
 
     private void analyze() throws InterruptedException {
         String line;
-        if ((line = queueOfLines.poll(10, TimeUnit.MILLISECONDS)) != null) {
-            lines.add(line);
+        if ((line = queueOfLines.poll(100, TimeUnit.MILLISECONDS)) != null) {
+            StringTokenizer tokenizer = new StringTokenizer(line);
+            while (tokenizer.hasMoreTokens()) {
+                String word = StringUtil.clearPunctuation(tokenizer.nextToken());
+                if (word.trim().length() >= 3) {
+                    this.wordsHashMap.putIfAbsent(word, Consumer.PRESENT);
+                }
+            }
         }
     }
 
@@ -42,19 +48,8 @@ public class Consumer implements Runnable {
             while (!queueOfLines.isEmpty()) {
                 analyze();
             }
-
-            // Work with received lines
-            for (String line: lines) {
-                StringTokenizer tokenizer = new StringTokenizer(line);
-                while (tokenizer.hasMoreTokens()) {
-                    String word = StringUtil.clearPunctuation(tokenizer.nextToken());
-                    if (word.trim().length() >= 3) {
-                        this.wordsHashMap.put(word, emptyObjectForMap);
-                    }
-                }
-            }
         } catch (InterruptedException e) {
-            log.error(e);
+            LOG.error(e);
         }
     }
 }
