@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.tumasov.siberteam.test.services.IDone;
 import org.tumasov.siberteam.test.services.StringUtil;
 
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentMap;
@@ -16,7 +15,6 @@ public class Consumer implements Runnable {
     private final BlockingQueue<String> queueOfLines;
     private final ConcurrentMap<String, Object> wordsHashMap;
     private final IDone indicator;
-    private final ArrayList<String> lines = new ArrayList<>();
 
     public Consumer(BlockingQueue<String> queueOfLines, ConcurrentMap<String, Object> wordsHashMap, IDone indicator) {
         this.queueOfLines = queueOfLines;
