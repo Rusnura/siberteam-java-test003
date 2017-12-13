@@ -9,14 +9,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-public class Consumer implements Runnable {
-    private static final Logger LOG = Logger.getLogger(Consumer.class);
+public class ParsingConsumer implements Runnable {
+    private static final Logger LOG = Logger.getLogger(ParsingConsumer.class);
     private static final Boolean PRESENT = Boolean.TRUE;
     private final BlockingQueue<String> queueOfLines;
     private final ConcurrentMap<String, Object> wordsHashMap;
     private final IDone indicator;
 
-    public Consumer(BlockingQueue<String> queueOfLines, ConcurrentMap<String, Object> wordsHashMap, IDone indicator) {
+    public ParsingConsumer(BlockingQueue<String> queueOfLines, ConcurrentMap<String, Object> wordsHashMap, IDone indicator) {
         this.queueOfLines = queueOfLines;
         this.wordsHashMap = wordsHashMap;
         this.indicator = indicator;
@@ -29,7 +29,7 @@ public class Consumer implements Runnable {
             while (tokenizer.hasMoreTokens()) {
                 String word = StringUtil.clearPunctuation(tokenizer.nextToken());
                 if (word.trim().length() >= 3) {
-                    this.wordsHashMap.putIfAbsent(word, Consumer.PRESENT);
+                    this.wordsHashMap.putIfAbsent(word, ParsingConsumer.PRESENT);
                 }
             }
         }

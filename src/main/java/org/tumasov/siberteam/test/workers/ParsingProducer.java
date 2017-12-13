@@ -10,13 +10,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.BlockingQueue;
 
-public class Producer implements Runnable, IDone {
-    private static final Logger LOG = Logger.getLogger(Producer.class);
+public class ParsingProducer implements Runnable, IDone {
+    private static final Logger LOG = Logger.getLogger(ParsingProducer.class);
     private final BlockingQueue<String> queueOfLines;
     private boolean isDone = false;
     private final URL url;
 
-    public Producer(BlockingQueue<String> queueOfLines, URL url) {
+    public ParsingProducer(BlockingQueue<String> queueOfLines, URL url) {
         this.queueOfLines = queueOfLines;
         this.url = url;
     }

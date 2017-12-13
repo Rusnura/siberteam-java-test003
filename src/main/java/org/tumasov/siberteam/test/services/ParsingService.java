@@ -1,8 +1,8 @@
 package org.tumasov.siberteam.test.services;
 
 import org.apache.log4j.Logger;
-import org.tumasov.siberteam.test.workers.Consumer;
-import org.tumasov.siberteam.test.workers.Producer;
+import org.tumasov.siberteam.test.workers.ParsingConsumer;
+import org.tumasov.siberteam.test.workers.ParsingProducer;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,8 +47,8 @@ public class ParsingService {
         final ArrayList<Future> workers = new ArrayList<>();
 
         for (int i = 0; i < urlList.size(); i++) {
-            final Producer producer = new Producer(queueOfLines, this.urlList.get(i));
-            final Consumer consumer = new Consumer(queueOfLines, wordsHashMap, producer);
+            final ParsingProducer producer = new ParsingProducer(queueOfLines, this.urlList.get(i));
+            final ParsingConsumer consumer = new ParsingConsumer(queueOfLines, wordsHashMap, producer);
 
             downloadingService.submit(producer);
             final Future worker = readingService.submit(consumer);
