@@ -1,7 +1,6 @@
 package org.tumasov.siberteam.test.workers;
 
 import org.apache.log4j.Logger;
-import org.tumasov.siberteam.test.entities.AnagramHolder;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,21 +14,6 @@ public class FileWriter {
         try (PrintWriter writer = new PrintWriter(new java.io.FileWriter(file, true))) {
             for (String word: words) {
                 writer.println(word);
-            }
-        } catch (IOException e) {
-            LOG.error(e);
-        }
-    }
-
-    public static void writeAnagramToFile(String fileName, List<AnagramHolder> anagrams) {
-        File file = new File(fileName);
-        try (PrintWriter writer = new PrintWriter(new java.io.FileWriter(file, true))) {
-            for (AnagramHolder anagram: anagrams) {
-                if (anagram.getAnagrams().size() < 2) continue;
-                for (String word: anagram.getAnagrams()) {
-                    writer.print(word + " ");
-                }
-                writer.println();
             }
         } catch (IOException e) {
             LOG.error(e);
