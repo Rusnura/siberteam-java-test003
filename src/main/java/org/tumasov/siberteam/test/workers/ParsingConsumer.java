@@ -25,9 +25,9 @@ public class ParsingConsumer implements Runnable {
     private void analyze() throws InterruptedException {
         String line;
         if ((line = queueOfLines.poll(100, TimeUnit.MILLISECONDS)) != null) {
-            StringTokenizer tokenizer = new StringTokenizer(line);
+            StringTokenizer tokenizer = new StringTokenizer(line.trim(), " \t\n\r\f ");
             while (tokenizer.hasMoreTokens()) {
-                String word = StringUtil.clearPunctuation(tokenizer.nextToken());
+                String word = StringUtil.clearPunctuation(tokenizer.nextToken().trim());
                 if (word.trim().length() >= 3) {
                     this.wordsHashMap.putIfAbsent(word, ParsingConsumer.PRESENT);
                 }
